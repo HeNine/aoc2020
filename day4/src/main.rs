@@ -53,13 +53,13 @@ fn main() {
 
 fn verify(passport: &HashMap<String, String>) -> u32 {
     lazy_static! {
-        static ref color_match: Regex = Regex::new("#[0-9a-f]{6}").unwrap();
+        static ref COLOR_MATCH: Regex = Regex::new("#[0-9a-f]{6}").unwrap();
     }
     lazy_static! {
-    static ref pid_match: Regex = Regex::new("[0-9]{9}").unwrap();
+    static ref PID_MATCH: Regex = Regex::new("[0-9]{9}").unwrap();
     }
     lazy_static! {
-    static ref eye_colors: HashSet<String> = {
+    static ref EYE_COLORS: HashSet<String> = {
         let mut s = HashSet::new();
         s.insert("amb".to_string());
         s.insert("blu".to_string());
@@ -80,14 +80,14 @@ fn verify(passport: &HashMap<String, String>) -> u32 {
         (2020..2031).contains(&(passport.get("eyr").unwrap().parse::<u32>().unwrap())) &&
         passport.contains_key("hgt") &&
         (passport.get("hgt").unwrap().ends_with("cm") &&
-            (150..194).contains(&passport.get("hgt").unwrap().trim_right_matches("cm").parse::<u32>().unwrap())
+            (150..194).contains(&passport.get("hgt").unwrap().trim_end_matches("cm").parse::<u32>().unwrap())
             ||
             passport.get("hgt").unwrap().ends_with("in") &&
-                (59..76).contains(&passport.get("hgt").unwrap().trim_right_matches("in").parse::<u32>().unwrap())
+                (59..76).contains(&passport.get("hgt").unwrap().trim_end_matches("in").parse::<u32>().unwrap())
         ) &&
-        passport.contains_key("ecl") && eye_colors.contains(passport.get("ecl").unwrap()) &&
-        passport.contains_key("hcl") && color_match.is_match(passport.get("hcl").unwrap()) &&
-        passport.contains_key("pid") && pid_match.is_match(passport.get("pid").unwrap()) {
+        passport.contains_key("ecl") && EYE_COLORS.contains(passport.get("ecl").unwrap()) &&
+        passport.contains_key("hcl") && COLOR_MATCH.is_match(passport.get("hcl").unwrap()) &&
+        passport.contains_key("pid") && PID_MATCH.is_match(passport.get("pid").unwrap()) {
         1
     } else {
         0
