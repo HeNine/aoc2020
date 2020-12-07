@@ -14,9 +14,7 @@ fn main() {
     let input_buffer = BufReader::new(&file);
 
     let mut row = 0;
-    let mut row_i = 6;
     let mut column = 0;
-    let mut col_i = 2;
 
     let mut max_id = 0;
 
@@ -33,18 +31,19 @@ fn main() {
         for char in line.chars() {
             match char {
                 'F' => {
-                    row_i -= 1;
+                    // row_i -= 1;
+                    row <<= 1;
                 }
                 'B' => {
-                    row += 1 << row_i;
-                    row_i -= 1;
+                    row <<= 1;
+                    row += 1;
                 }
                 'R' => {
-                    column += 1 << col_i;
-                    col_i -= 1;
+                    column <<= 1;
+                    column += 1;
                 }
                 'L' => {
-                    col_i -= 1;
+                    column <<= 1;
                 }
                 _ => panic!()
             }
@@ -60,9 +59,7 @@ fn main() {
         filled_seats.insert((row, column));
 
         row = 0;
-        row_i = 6;
         column = 0;
-        col_i = 2;
     }
 
     for r in minrow..maxrow {
