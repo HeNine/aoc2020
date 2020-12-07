@@ -15,7 +15,7 @@ fn main() {
     let mut sum = 0;
 
     let mut seen_chars = HashSet::from_iter((b'a'..=b'z').map(char::from));
-    // seen_chars.extend();
+
     for rline in input_buffer.lines() {
         let line = rline.unwrap();
 
