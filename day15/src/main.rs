@@ -6,9 +6,7 @@ fn main() {
 
     // let mut memory: HashMap<i32, usize> = HashMap::new();
     let mut memory: Vec<Option<i32>> = Vec::with_capacity(30_000_000);
-    for _i in 0..30_000_000 {
-        memory.push(None)
-    }
+    memory.resize(30_000_000, None);
     let mut last = input[0];
 
     for turn in 1..30_000_000 {
